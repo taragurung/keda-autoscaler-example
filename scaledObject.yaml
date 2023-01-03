@@ -1,0 +1,17 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: myapp-cpu-utilization
+  namespace: keda-test
+spec:
+  maxReplicaCount: 3
+  minReplicaCount: 1
+  scaleTargetRef:
+    name: nginx-deployment
+  triggers:
+  - metadata:
+      type: Utilization
+      value: "1"
+    type: cpu
+    authenticationRef:
+      name: keda-trigger-auth-aws-iam
